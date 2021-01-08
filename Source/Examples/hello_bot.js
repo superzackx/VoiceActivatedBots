@@ -11,7 +11,9 @@ class HelloBot extends Bot {
             const msg = event.results[0][0].transcript;
             const command = msg.toLowerCase();
             // custom parameters which are not in the bot class!
-            if (command.includes("hello")) window.speechSynthesis.speak("Hi!");
+            if (command.includes("hello")){
+                window.speechSynthesis.speak("Hi!");
+            }
             // feel free to create extra variables too!
         }
     }
