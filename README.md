@@ -18,6 +18,8 @@ Voice API will not work in internet explorer! Please use supported browsers such
 
 1. superzackx(ragecode) - That's me! I made this fully. So whenever your bot does something for you, keep me in mind! Just kidding, have fun with the bot. Developing is all about open-source.
 
+2. NightZan999 - A great person who has done a lot for this project. Mainly the OOP part.
+
 ## Exlplore the voice API
 
 Link for MDN reference: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API
