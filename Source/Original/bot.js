@@ -1,4 +1,3 @@
-const fs = require("fs"); 
 class Bot {
     constructor(SpeechRecognition = false, SpeechRecognitionEvent = false) {
         if (SpeechRecognition && SpeechRecognitionEvent) {
@@ -9,109 +8,65 @@ class Bot {
         }
         if (!SpeechRecognition) this.SpeechRecognition = webkitSpeechRecognition;
         if (!SpeechRecognitionEvent) this.SpeechRecognitionEvent = webkitSpeechRecognitionEvent;
+        //create recognition
         this.recognition = new SpeechRecognition();
+        this.message = new SpeechSynthesisUtterance();
+        //return true
         return true; 
     }
-    start() {
-        return this.recognition.start();
-    }
-    speak(query) { 
-        speakNow.voice = voices[0]
-        const speakNow = new SpeechSynthesisUtterance();
-        speakNow.text = query
-        //return the values of window.speechSynthesis
-        return window.speechSynthesis.speak(speakNow);
-    }
+    // getters 
     getRecognition() {
+        //return the recognition
         return this.recognition; 
     }
+    //return arguments as an array!
+    getArgs() {return this.msg, this.command;}
+    getSpeechRecognition() 
+    {return this.SpeechRecognition;}
+    getSpeechRecognitionEvent() {return this.SpeechRecognitionEvent; }
+    getAllArgs() {
+        // get args in local scope
+        const SpeechRecognition = this.SpeechRecognition; 
+        const SpeechRecognitionEvent = this.SpeechRecognitionEvent; 
+        const recognition = this.recognition; 
+        const msg = this.msg; 
+        const command = this.command; 
+        //return new array of elements!
+        return [ 
+            SpeechRecognition, SpeechRecognitionEvent, 
+            recognition, msg, command
+        ]; 
+    }
+
+    //trigger
+    async newCommand(trigger, response){
+        const args = this.getArgs();
+        const command = args[1]; 
+        if(command.includes(trigger)){
+            response(); 
+        }
+    }
+    //returns a promise RIP
+    async newFalseCommand(trigger, response) {
+        const args = this.getArgs();
+        const command = args[1]; 
+        if (!command.includes(trigger)) response()
+    }
+
+    //run method
     async run()
     {
         recognition.onresult = function(event) {
-            const msg = event.results[0][0].transcript;
-            const command = msg.toLowerCase();
-            async function newCommand(trigger, response){
-                if(command.includes(trigger)){
-                    response()
-                }
-            }
+            this.msg = event.results[0][0].transcript;
+            this.command = msg.toLowerCase();
+            //get msg and command
+            const msg = this.msg;
+            const command = this.command;
             //function inside the method activated
             await newCommand("hello" , async() => {
-                await window.open("hello.com") // should work well - true
+                await window.open("hello.com") // should work well 
             }) 
-            if(command.includes("facebook")){
-                var Facebookmsg = new SpeechSynthesisUtterance();
-                Facebookmsg.text = "Absolutely Sir, opening Facebook now.";
-                window.speechSynthesis.speak(Facebookmsg);
-                window.open("https://facebook.com")
-            } else if(command.includes("whatsapp")){
-                var Whatsappmsg = new SpeechSynthesisUtterance();
-                Whatsappmsg.text = "Here's Whatsapp Web";
-                window.speechSynthesis.speak(Whatsappmsg);
-                window.open("https://web.whatsapp.com")
-            } else if(command.includes("instagram")){
-                var InstaMessage = new SpeechSynthesisUtterance();
-                InstaMessage.text = "Opening Instagram";
-                window.speechSynthesis.speak(InstaMessage);
-                window.open("https://instagram.com")
-            } else if(command.includes("joke")){
-                const jokes = ["Never talk to Pi. It'll go on forever." , "Maths teacher: What is a line? A genius answered : A line is a dot, going for a walk." , "Where do sheep take a bath? In a baaaa-th tub." , "There's a fine line between a numerator and a denominator... and you can't cross it." , "What do you get when you cross a stream and a brook? Wet feet."];
-                const randJoke = jokes[Math.floor(Math.random() * jokes.length)];
-                const JokeMsg = new SpeechSynthesisUtterance();
-                JokeMsg.text = randJoke;
-                window.speechSynthesis.speak(JokeMsg);
-            } else if(command.includes("hi") || command.includes("hello")){
-                var HiMessage = new SpeechSynthesisUtterance();
-                HiMessage.text = "Welcome back sir.";
-                window.speechSynthesis.speak(HiMessage);
-            } else if(command.includes("mail")){
-                var MailMSG = new SpeechSynthesisUtterance();
-                MailMSG.text = "Okay, I have opened your mail now.";
-                window.speechSynthesis.speak(MailMSG);
-                window.open("https://gmail.com")
-            } else if(command.includes("google")){
-                var GoogMsg = new SpeechSynthesisUtterance();
-                GoogMsg.text = "Opened Google";
-                window.speechSynthesis.speak(GoogMsg);
-                window.open("https://google.com")
-            } else if(command.includes("github")){
-                var GitMSG = new SpeechSynthesisUtterance();
-                GitMSG.text = "Here's github!";
-                window.speechSynthesis.speak(GitMSG);
-                console.log("Here's github.")
-                window.open("https://github.com")
-            } else if(command.includes("date")){
-                const time =  new Date();
-                var mainTime = time.toDateString();
-                var dateSpeak = new SpeechSynthesisUtterance();
-                dateSpeak.text = "Today is " + mainTime 
-                window.speechSynthesis.speak(dateSpeak);
-            } else if(command.includes("time")){
-                const time =  new Date();
-                var timeNow = time.toLocaleTimeString();
-                var timeSpeak = new SpeechSynthesisUtterance();
-                timeSpeak.text = "It's " + timeNow   
-                window.speechSynthesis.speak(timeSpeak);
-            } else if(command.includes("search for")){
-                var split = command.split(" ")
-                var seartchSpeak = new SpeechSynthesisUtterance();
-                seartchSpeak.text = "Showing resultst for that on the internet."
-                window.speechSynthesis.speak(seartchSpeak);
-                window.open("https://google.com/search?q=" + split[2])
-            } else if(command.includes("discord")){
-                speak("Here's discord, sir.")
-                window.open("https://www.discord.com/app")
-            } else if(command.includes("npm")){
-                speak("Here's npmjs")
-                window.open("https://npmjs.com")
-            } else if(command.includes("repl.it")){
-                speak("Opening repl.it")
-                window.open("https://repl.it")
-            } else{
-                var fallback = new SpeechSynthesisUtterance();
-                fallback.text = "I don't understand that";
-                window.speechSynthesis.speak(fallback);
-            }
+            //take in events
                     
             recognition.onspeechend = function({ props }) {
                 await recognition.stop();
@@ -124,5 +79,35 @@ class Bot {
             }
         }
     }
+    async returnValidResponse(query)
+    {
+        const msg, command = this.getArgs(); 
+        if (command.includes(query)) {
+            //get the message!
+            let message = new SpeechSynthesisUtterance();
+            //have the text in context with the query
+            message.text = `Absolutely, opening ${query} now!`
+        }
+    }
+
+    async start() {
+        //start from the recognition
+        return await this.recognition.start();
+    }
+
+    async speak(query) { 
+        speakNow.voice = voices[0]
+        const speakNow = new SpeechSynthesisUtterance();
+        speakNow.text = query
+        //return the values of window.speechSynthesis
+        return await window.speechSynthesis.speak(speakNow);
+    }
 }
+
+// have a testing class which is just a child of the parent!
+class BotUtils extends Bot {
+    //code for testing
+}
+
+//normally give the bot class when being required!
 export default Bot; 
