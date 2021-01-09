@@ -6,6 +6,10 @@ Voice activated bots! The name explains it. 🤖🐥🤖
 
 To use, simply download the files and then open the ```test.html``` file in your browser. It will show an request for microphone, accept that. All the logic and JavaScript is in ```app.js```
 
+Or you can use the CDN version which offers everything except for the latest OOP version.
+
+```https://cdn.jsdelivr.net/gh/superzackx/VoiceActivatedBots@latest/CDN/script.js```
+
 ## Contributions
 
 To contribute to this repo, clone it on your PC and open an issue with the link to the modified version. I will look into it!
