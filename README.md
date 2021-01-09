@@ -20,7 +20,7 @@ Voice API will not work in internet explorer! Please use supported browsers such
 
 ## Credits
 
-1. superzackx(ragecode) - That's me! I made this fully. So whenever your bot does something for you, keep me in mind! Just kidding, have fun with the bot. Developing is all about open-source.
+1. superzackx(Yash) - That's me! I made this fully. So whenever your bot does something for you, keep me in mind! Just kidding, have fun with the bot. Developing is all about open-source.
 
 2. NightZan999 - A great person who has done a lot for this project. Mainly the OOP part.
 
