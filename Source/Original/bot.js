@@ -31,12 +31,23 @@ class Bot {
         const recognition = this.recognition; 
         const msg = this.msg; 
         const command = this.command; 
-        //return new array of elements!
+        //try and catch this
+        try {
+            const SpeechGrammarList = this.SpeechGrammerList; 
+        }
+        catch (error) {
+            console.error(error); 
+            return [ 
+                SpeechRecognition, SpeechRecognitionEvent, 
+                recognition, msg, command
+            ]; 
+        }
+        //return new array of elements
         return [ 
             SpeechRecognition, SpeechRecognitionEvent, 
-            recognition, msg, command
+            recognition, msg, command, SpeechGrammarList
         ]; 
-    }
+    }   
 
     //trigger
     async newCommand(trigger, response){
@@ -101,6 +112,9 @@ class Bot {
         speakNow.text = query
         //return the values of window.speechSynthesis
         return await window.speechSynthesis.speak(speakNow);
+    }
+    addSpeechGrammerList(x) {
+        this.SpeechGrammerList = x; 
     }
 }
 
