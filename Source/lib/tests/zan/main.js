@@ -1,7 +1,8 @@
 const Bot = require("../../../Original/bot.js");
 const Model = require("../../../Model.js");
+const fs = require("../../../Original/fs.js"); 
 
-class Main extends Model {
+module.exports = class Main extends Model {
     //lets pretend as if this constructor never existed 
     constructor(args) {
         super.constructor(args); 
@@ -14,4 +15,4 @@ class Main extends Model {
         return new Bot(SpeechRecognition, SpeechRecognitionEvent).addSpeechGrammerList(SpeechGrammarList);
     }
 }
-export default Main; 
+//export default Main; 

@@ -118,10 +118,6 @@ class Bot {
     }
 }
 
-// have a testing class which is just a child of the parent!
-class BotUtils extends Bot {
-    //code for testing
-}
 
 //normally give the bot class when being required!
 export default Bot; 
